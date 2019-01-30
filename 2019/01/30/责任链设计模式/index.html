@@ -17,16 +17,23 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>Blog</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
-<meta property="og:url" content="http://yefengyu.github.io/index.html">
+  <title>&#39;责任链设计模式&#39; | Blog</title>
+  <meta name="description" content="概述首先设想这样一个场景，有一个事件流，经过我们系统，会经过多个处理，每一个处理相对比较独立，最后输出结果。如下图所示：  针对上面的场景，我们有如下要求，如果新增一个处理流程，不会对原有的代码进行改动，且事件处理没有先后之分。（注意此处） 责任链处理流程首先在pom.xml文件添加如下依赖，减少对象的getter、setter方法占用页面。 123456&amp;lt;dependency&amp;gt;">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&#39;责任链设计模式&#39;">
+<meta property="og:url" content="http://yefengyu.github.io/2019/01/30/责任链设计模式/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="概述首先设想这样一个场景，有一个事件流，经过我们系统，会经过多个处理，每一个处理相对比较独立，最后输出结果。如下图所示：  针对上面的场景，我们有如下要求，如果新增一个处理流程，不会对原有的代码进行改动，且事件处理没有先后之分。（注意此处） 责任链处理流程首先在pom.xml文件添加如下依赖，减少对象的getter、setter方法占用页面。 123456&amp;lt;dependency&amp;gt;">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yefengyu.github.io/2019/01/30/责任链设计模式/sence.PNG">
+<meta property="og:updated_time" content="2019-01-30T14:38:26.705Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
+<meta name="twitter:title" content="&#39;责任链设计模式&#39;">
+<meta name="twitter:description" content="概述首先设想这样一个场景，有一个事件流，经过我们系统，会经过多个处理，每一个处理相对比较独立，最后输出结果。如下图所示：  针对上面的场景，我们有如下要求，如果新增一个处理流程，不会对原有的代码进行改动，且事件处理没有先后之分。（注意此处） 责任链处理流程首先在pom.xml文件添加如下依赖，减少对象的getter、setter方法占用页面。 123456&amp;lt;dependency&amp;gt;">
+<meta name="twitter:image" content="http://yefengyu.github.io/2019/01/30/责任链设计模式/sence.PNG">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://yefengyu.github.io/index.html">
+  <link rel="canonical" href="http://yefengyu.github.io/2019/01/30/责任链设计模式/index.html">
   
   
     <link rel="icon" href="/yefengyu.jpg" type="image/x-icon">
@@ -163,18 +170,17 @@
 </aside>
 
   
-  <main class="main" role="main">
   
-  
-    <div class="content">
+<main class="main" role="main">
+  <div class="content">
   <article id="post-责任链设计模式" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/30/责任链设计模式/">&#39;责任链设计模式&#39;</a>
+    <h1 class="article-title" itemprop="name">
+      &#39;责任链设计模式&#39;
     </h1>
   
 
@@ -332,11 +338,30 @@
     </div>
   </article>
   
-</div>
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
 
   
+</div>
 
-   
+  <nav class="bar bar-footer clearfix" data-stick-bottom="">
+  <div class="bar-inner">
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
 </main>
 
   <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
@@ -380,6 +405,33 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
    
 
 
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
 
 
 
