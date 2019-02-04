@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="概述定义 定义一个操作中的算法骨架，将步骤延迟到子类中。 模板设计模式是一种行为设计模式，一般是准备一个抽象类，将部分逻辑以具体方法或者具体的构造函数实现，然后声明一些抽象方法，这样可以强制子类实现剩余的逻辑。不同的子类以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板设计模式能达成的功能。 场景 适用于一些复杂操作进行步骤分割、抽取公共部分由抽象父类实现、将不同的部分在父类中">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-04T05:43:43.672Z">
+<meta property="og:updated_time" content="2019-02-04T07:18:56.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板设计模式">
 <meta name="twitter:description" content="概述定义 定义一个操作中的算法骨架，将步骤延迟到子类中。 模板设计模式是一种行为设计模式，一般是准备一个抽象类，将部分逻辑以具体方法或者具体的构造函数实现，然后声明一些抽象方法，这样可以强制子类实现剩余的逻辑。不同的子类以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。这就是模板设计模式能达成的功能。 场景 适用于一些复杂操作进行步骤分割、抽取公共部分由抽象父类实现、将不同的部分在父类中">
@@ -114,6 +114,26 @@
           </a>
         </li>
         
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
       </ul>
       
     </nav>
@@ -125,6 +145,13 @@
   <div class="slimContent">
     
       
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
 
     
       
@@ -147,7 +174,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/设计模式/">设计模式</a>
               </p>
               <p class="item-title">
                 <a href="/2019/01/31/模板设计模式/" class="title">模板设计模式</a>
@@ -162,7 +189,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/设计模式/">设计模式</a>
               </p>
               <p class="item-title">
                 <a href="/2019/01/30/责任链设计模式/" class="title">责任链设计模式</a>
@@ -177,6 +204,16 @@
     </div>
   </div>
   
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
 
     
   </div>
@@ -206,6 +243,11 @@
 	</a>
 </span>
         
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+  </span>
+
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
@@ -214,14 +256,21 @@
 
 
         
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
 
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/01/31/模板设计模式/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 700(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 756(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3(分)</span>
 	
 
       </div>
@@ -247,6 +296,7 @@
 <blockquote>
 <p>abstract class’s constructor!<br>abstract class’s concrete operation 1<br>ConcreteClassA’s abstractOperation1<br>ConcreteClassA’s abstractOperation2<br>abstract class’s concrete operation 2<br>$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$<br>abstract class’s constructor!<br>abstract class’s concrete operation 1<br>ConcreteClassB’s abstractOperation1<br>ConcreteClassB’s abstractOperation2<br>abstract class’s concrete operation 2</p>
 </blockquote>
+<p>通过上面的例子，我么可以看出，不同的实现类，重写的抽象方法的逻辑不同，导致算法执行的内容也不相同，但是算法骨架是没有改变的。</p>
 
       
     </div>
@@ -361,6 +411,8 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
    
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
 
 
 

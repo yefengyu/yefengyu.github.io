@@ -27,7 +27,7 @@
 <meta property="og:description" content="概述首先设想这样一个场景，有一个事件流，经过我们系统，会执行多个处理逻辑，每一个处理逻辑相对比较独立，最后输出结果。事件流执行过程如下图所示：  针对上面的场景，现在我们有如下要求，如果新增一个处理逻辑，不应该对原有的处理逻辑进行改动，且事件流执行的处理逻辑单元没有先后之分。（注意此处） 责任链实例演示新建一个maven工程，首先在pom.xml文件添加如下依赖，lombok简化开发。 12345">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yefengyu.github.io/2019/01/30/责任链设计模式/sence.PNG">
-<meta property="og:updated_time" content="2019-01-31T15:04:21.048Z">
+<meta property="og:updated_time" content="2019-02-04T07:17:03.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="责任链设计模式">
 <meta name="twitter:description" content="概述首先设想这样一个场景，有一个事件流，经过我们系统，会执行多个处理逻辑，每一个处理逻辑相对比较独立，最后输出结果。事件流执行过程如下图所示：  针对上面的场景，现在我们有如下要求，如果新增一个处理逻辑，不应该对原有的处理逻辑进行改动，且事件流执行的处理逻辑单元没有先后之分。（注意此处） 责任链实例演示新建一个maven工程，首先在pom.xml文件添加如下依赖，lombok简化开发。 12345">
@@ -116,6 +116,26 @@
           </a>
         </li>
         
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
       </ul>
       
     </nav>
@@ -127,6 +147,13 @@
   <div class="slimContent">
     
       
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
 
     
       
@@ -149,7 +176,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/设计模式/">设计模式</a>
               </p>
               <p class="item-title">
                 <a href="/2019/01/31/模板设计模式/" class="title">模板设计模式</a>
@@ -164,7 +191,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/设计模式/">设计模式</a>
               </p>
               <p class="item-title">
                 <a href="/2019/01/30/责任链设计模式/" class="title">责任链设计模式</a>
@@ -179,6 +206,16 @@
     </div>
   </div>
   
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
 
     
   </div>
@@ -208,6 +245,11 @@
 	</a>
 </span>
         
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+  </span>
+
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
@@ -216,6 +258,13 @@
 
 
         
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
 
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/01/30/责任链设计模式/#comments" class="article-comment-link">评论</a></span>
         
@@ -429,6 +478,8 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
    
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
 
 
 
