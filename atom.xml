@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yefengyu.github.io/"/>
-  <updated>2019-02-10T02:10:01.422Z</updated>
+  <updated>2019-02-10T02:58:19.002Z</updated>
   <id>http://yefengyu.github.io/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring简介</title>
+    <link href="http://yefengyu.github.io/2019/02/10/Spring%E7%AE%80%E4%BB%8B/"/>
+    <id>http://yefengyu.github.io/2019/02/10/Spring简介/</id>
+    <published>2019-02-10T02:57:20.000Z</published>
+    <updated>2019-02-10T02:58:19.002Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="Spring核心框架" scheme="http://yefengyu.github.io/categories/Spring%E6%A0%B8%E5%BF%83%E6%A1%86%E6%9E%B6/"/>
+    
+    
+      <category term="Spring" scheme="http://yefengyu.github.io/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>模板设计模式</title>
