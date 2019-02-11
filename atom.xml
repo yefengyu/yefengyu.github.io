@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yefengyu.github.io/"/>
-  <updated>2019-02-10T06:17:55.475Z</updated>
+  <updated>2019-02-11T15:11:49.469Z</updated>
   <id>http://yefengyu.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM内存结构</title>
+    <link href="http://yefengyu.github.io/2019/02/11/JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/"/>
+    <id>http://yefengyu.github.io/2019/02/11/JVM内存结构/</id>
+    <published>2019-02-11T12:30:33.000Z</published>
+    <updated>2019-02-11T15:11:49.469Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="JVM内存结构简介"><a href="#JVM内存结构简介" class="headerlink" title="JVM内存结构简介"></a>JVM内存结构简介</h1><p>java虚拟机在执行java程序的过程中，会把它管理的内存划分为若干个不同的数据区域，这些区域用途不一，有的随着虚拟机进程的启动而存在，有些区域则是依赖用户线程的启动和结束而建立和销毁。根据JVM规范，JVM应该被划分为五块区域——<strong>即虚拟机栈、堆、方法区、程序计数器、本地方法栈</strong>五个部分。</p><p><img src="/2019/02/11/JVM内存结构/虚拟机内存结构.PNG" alt="JVM内存结构"></p><h1 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h1><p>程序计数器可以看做当前线程执行字节码的行号指示器，字节码在工作的时候就是更改程序计数器的值来获取下一条字节码指令。字节码指令如分支、循环、异常处理等等。</p><p><strong>为什么程序计数器是线程私有的？</strong></p><p>因为虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，在任何时刻一个处理器只会执行一条线程中的指令，因此为了线程切换后能恢复到正常的执行位置，每条线程都需要有一个独立的程序计数器，所以程序计数器是线程私有的。</p><blockquote><ol><li>如果线程执行的是java方法，线程对应的程序计数器记录的是正在执行虚拟机字节码指令地址；</li><li>如果执行的是Native方法，则计数器为undefined</li></ol></blockquote><h1 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h1><p>虚拟机栈描述的是java方法执行的内存模型。每个方法在执行的同时都会创建一个栈帧，用于存放局部变量表、操作数栈、动态链接、方法出口等。</p><p><img src="/2019/02/11/JVM内存结构/java虚拟机栈.PNG" alt="虚拟机栈"></p><ul><li>局部变量表：</li></ul><blockquote><ol><li><p>存放编译时可知的基本数据类类型；</p></li><li><p>对象引用。</p></li></ol></blockquote><ul><li>异常情况</li></ul><blockquote><ol><li>线程请求的栈容量超过了虚拟机栈允许的最大栈容量，将抛出<strong>StackOverflowError</strong></li><li>如果虚拟机栈可以动态扩展，并且尝试申请扩展发现内存不够；或者创建新线程的时候没有足够内存去创建虚拟机栈，则抛出<strong>OutOfMemoryError</strong></li></ol></blockquote><h1 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h1><p>和虚拟机栈相似，区别是：<strong>虚拟机栈为执行java方法服务；而本地方法栈则为虚拟机使用的Native方法服务。</strong></p><p><em><font color="FF0000">由于虚拟机栈和本地方法栈都是存储线程方法的区域，每个线程都有自己的方法的局部变量等，因此也是线程私有的</font></em></p><h1 id="java堆"><a href="#java堆" class="headerlink" title="java堆"></a>java堆</h1><p>对于大多数应用，java 堆是存放对象实例的地方，占用内存最大，所有线程共享，虚拟机启动时创建，是垃圾收集器管理的主要区域。堆在物理空间可以不连续，只要逻辑上连续即可。</p><blockquote><p>如果堆中没有内存分配实例、并且堆无法再扩展时，将会抛出OutOfMemoryError</p></blockquote><h1 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h1><p>方法区为各个线程所共享区域，用于存放虚拟机加载的类信息、常量、静态变量等数据。</p><blockquote><p>当方法区无法满足内存分配需求的时候，将会抛出OutOfMemoryError</p></blockquote><p><strong>运行时常量池：</strong>这是方法区的一部分，Class文件除了有类的版本、字段、方法、接口等信息外，还有一项是常量池，用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载之后进入方法区的运行时常量池中存放。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;JVM内存结构简介&quot;&gt;&lt;a href=&quot;#JVM内存结构简介&quot; class=&quot;headerlink&quot; title=&quot;JVM内存结构简介&quot;&gt;&lt;/a&gt;JVM内存结构简介&lt;/h1&gt;&lt;p&gt;java虚拟机在执行java程序的过程中，会把它管理的内存划分为若干个不同的数据区域
+      
+    
+    </summary>
+    
+      <category term="Java虚拟机" scheme="http://yefengyu.github.io/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+    
+      <category term="JVM" scheme="http://yefengyu.github.io/tags/JVM/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring依赖注入-入门</title>
