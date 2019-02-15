@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>初试Spring-Cloud-Gateway | Blog</title>
+  <meta name="description" content="概述 什么是Spring Cloud Gateway  Spring Cloud Gateway是Spring官方基于Spring 5.0，Spring Boot 2.0和Project Reactor等技术开发的网关，Spring Cloud Gateway旨在为微服务架构提供一种简单而有效的统一的API路由管理方式。  提供依赖  Spring Cloud Gateway需要netty运行环境">
+<meta name="keywords" content="网关,微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初试Spring-Cloud-Gateway">
+<meta property="og:url" content="http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="概述 什么是Spring Cloud Gateway  Spring Cloud Gateway是Spring官方基于Spring 5.0，Spring Boot 2.0和Project Reactor等技术开发的网关，Spring Cloud Gateway旨在为微服务架构提供一种简单而有效的统一的API路由管理方式。  提供依赖  Spring Cloud Gateway需要netty运行环境">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/spring_cloud_gateway_diagram.png">
+<meta property="og:image" content="http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/springmvc.png">
+<meta property="og:image" content="http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/springgateway.png">
+<meta property="og:updated_time" content="2019-02-15T14:49:52.769Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初试Spring-Cloud-Gateway">
+<meta name="twitter:description" content="概述 什么是Spring Cloud Gateway  Spring Cloud Gateway是Spring官方基于Spring 5.0，Spring Boot 2.0和Project Reactor等技术开发的网关，Spring Cloud Gateway旨在为微服务架构提供一种简单而有效的统一的API路由管理方式。  提供依赖  Spring Cloud Gateway需要netty运行环境">
+<meta name="twitter:image" content="http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/spring_cloud_gateway_diagram.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/index.html">
+  
+  
+    <link rel="icon" href="/yefengyu.jpg" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/yefengyu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/yefengyu.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">叶锋玉</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Xian, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech="">
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope="" itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java虚拟机/">Java虚拟机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud-Gateway/">Spring Cloud Gateway</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring核心框架/">Spring核心框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spring-Cloud-Gateway/">Spring Cloud Gateway</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/15/初试Spring-Cloud-Gateway/" class="title">初试Spring-Cloud-Gateway</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-15T13:13:50.000Z" itemprop="datePublished">2019-02-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java虚拟机/">Java虚拟机</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/11/JVM内存结构/" class="title">JVM内存结构</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-11T12:30:33.000Z" itemprop="datePublished">2019-02-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spring核心框架/">Spring核心框架</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/10/Spring依赖注入-入门/" class="title">Spring依赖注入-入门</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-10T05:31:34.000Z" itemprop="datePublished">2019-02-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/设计模式/">设计模式</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/10/简单工厂设计模式/" class="title">简单工厂设计模式</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-10T03:34:26.000Z" itemprop="datePublished">2019-02-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/设计模式/">设计模式</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/31/模板设计模式/" class="title">模板设计模式</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-31T15:07:20.000Z" itemprop="datePublished">2019-01-31</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IOC/">IOC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网关/">网关</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构建服务端"><span class="toc-number">2.</span> <span class="toc-text">构建服务端</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构建网关"><span class="toc-number">3.</span> <span class="toc-text">构建网关</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-初试Spring-Cloud-Gateway" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      初试Spring-Cloud-Gateway
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/02/15/初试Spring-Cloud-Gateway/" class="article-date">
+	  <time datetime="2019-02-15T13:13:50.000Z" itemprop="datePublished">2019-02-15</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Spring-Cloud-Gateway/">Spring Cloud Gateway</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/微服务/">微服务</a>, <a class="article-tag-link" href="/tags/网关/">网关</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/02/15/初试Spring-Cloud-Gateway/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 603(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ol>
+<li><strong>什么是Spring Cloud Gateway</strong></li>
+</ol>
+<p><code>Spring Cloud Gateway</code>是Spring官方基于Spring 5.0，Spring Boot 2.0和Project Reactor等技术开发的网关，Spring Cloud Gateway旨在为微服务架构提供一种简单而有效的统一的API路由管理方式。</p>
+<ol start="2">
+<li><strong>提供依赖</strong></li>
+</ol>
+<p>Spring Cloud Gateway需要netty运行环境，由Spring Boot 和 Spring Webflux提供。它无法运行在Servlet 容器中，因此无法打成WAR包。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-gateway<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果已经添加了依赖，但是由于一些原因，你不想使用Spring Cloud Gateway，可以使用</p>
+<p><code>spring.cloud.gateway.enabled=false</code></p>
+<ol start="3">
+<li><p><strong>重要概念</strong></p>
+<ul>
+<li>路由：Gateway的基础构建模块。它包括一个ID，一个目标URL，一个断言集合和一个过滤器集合。如果断言判断为真，则路由匹配。</li>
+<li>断言：这是Java8的新增功能，输入的类型为Spring框架的ServerWebExchange。它可以匹配HTTP请求中的任何东西，比如：请求头或者参数。</li>
+<li>过滤器：是Spring框架的GatewayFilter，请求和响应都可以被Filter修改。</li>
+</ul>
+</li>
+<li><p><strong>如何工作</strong></p>
+<p><img src="/2019/02/15/初试Spring-Cloud-Gateway/spring_cloud_gateway_diagram.png" alt="spring_cloud_gateway_diagram"></p>
+<blockquote>
+<p>在路由中没有指定端口，HTTP将被指定为80，HTTPS 将被指定为443。</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="构建服务端"><a href="#构建服务端" class="headerlink" title="构建服务端"></a>构建服务端</h1><p>构建一个spring mvc程序，不做具体介绍</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/hello"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello: spring-cloud-gateway"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行如下图：</p>
+<p><img src="/2019/02/15/初试Spring-Cloud-Gateway/springmvc.png" alt="springmvc"></p>
+<h1 id="构建网关"><a href="#构建网关" class="headerlink" title="构建网关"></a>构建网关</h1><ol>
+<li><p><strong>添加依赖 </strong> （概述中第二节，注意是Spring boot工程）</p>
+</li>
+<li><p><strong>添加端口</strong> 为网关项目加入配置文件application.yml，修改服务器端口为9000，配置文件内容如下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">9000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>配置网关</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">gateway_server</span></span><br><span class="line"><span class="attr">  cloud:</span></span><br><span class="line"><span class="attr">    gateway:</span></span><br><span class="line"><span class="attr">      default-filters:</span></span><br><span class="line"><span class="attr">      routes:</span></span><br><span class="line"><span class="attr">        - id:</span> <span class="string">my_route</span></span><br><span class="line"><span class="attr">          uri:</span> <span class="attr">http://localhost:8080/</span></span><br><span class="line"><span class="attr">          predicates:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">Path=/gateway/**</span></span><br><span class="line"><span class="attr">          filters:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">StripPrefix=1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>启动服务，测试</strong></p>
+<p><img src="/2019/02/15/初试Spring-Cloud-Gateway/springgateway.png" alt="Spring-gateway"></p>
+</li>
+<li><p><strong>总结</strong></p>
+<ul>
+<li>id：固定，不同 id 对应不同的功能</li>
+<li>uri：目标服务地址</li>
+<li>predicates：路由条件</li>
+<li>filters：过滤规则</li>
+</ul>
+<p>上面的配置说明：</p>
+<p>访问 <a href="http://localhost:9000/gateway" target="_blank" rel="noopener">http://localhost:9000/gateway</a> 路由到  <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></p>
+<p>访问 <a href="http://localhost:9000/gateway/hello" target="_blank" rel="noopener">http://localhost:9000/gateway/hello</a> 路由到  <a href="http://localhost:8080/hello" target="_blank" rel="noopener">http://localhost:8080/hello</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/" title="初试Spring-Cloud-Gateway" target="_blank" rel="external">http://yefengyu.github.io/2019/02/15/初试Spring-Cloud-Gateway/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/yefengyu" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/yefengyu.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/yefengyu" target="_blank"><span class="text-dark">叶锋玉</span><small class="ml-1x"></small></a></h3>
+        <div>java工程师</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom="">
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/02/11/JVM内存结构/" title="JVM内存结构"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
