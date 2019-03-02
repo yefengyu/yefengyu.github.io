@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Kafka安装 | Blog</title>
+  <meta name="description" content="虚拟安装配置kafka一般安装到linux操作系统，当然windows下面也可以运行，作为程序员，还是在linux下面开发测试为主，因此我们首先安装3台linux虚拟机。  虚拟机软件：vmware workstation 14 pro 操作系统： CentOS-7-x86_64-DVD-1804  我们首先使用虚拟机软件vmware workstation 14 pro安装CentOS系统，相关">
+<meta name="keywords" content="Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka安装">
+<meta property="og:url" content="http://yefengyu.github.io/2019/02/27/Kafka安装/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="虚拟安装配置kafka一般安装到linux操作系统，当然windows下面也可以运行，作为程序员，还是在linux下面开发测试为主，因此我们首先安装3台linux虚拟机。  虚拟机软件：vmware workstation 14 pro 操作系统： CentOS-7-x86_64-DVD-1804  我们首先使用虚拟机软件vmware workstation 14 pro安装CentOS系统，相关">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-02T05:43:13.330Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka安装">
+<meta name="twitter:description" content="虚拟安装配置kafka一般安装到linux操作系统，当然windows下面也可以运行，作为程序员，还是在linux下面开发测试为主，因此我们首先安装3台linux虚拟机。  虚拟机软件：vmware workstation 14 pro 操作系统： CentOS-7-x86_64-DVD-1804  我们首先使用虚拟机软件vmware workstation 14 pro安装CentOS系统，相关">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://yefengyu.github.io/2019/02/27/Kafka安装/index.html">
+  
+  
+    <link rel="icon" href="/yefengyu.jpg" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/yefengyu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/yefengyu.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">叶锋玉</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Xian, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech="">
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope="" itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java虚拟机/">Java虚拟机</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Cloud-Gateway/">Spring Cloud Gateway</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring核心框架/">Spring核心框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Kafka/">Kafka</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/27/Kafka安装/" class="title">Kafka安装</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-27T13:15:45.000Z" itemprop="datePublished">2019-02-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spring-Cloud-Gateway/">Spring Cloud Gateway</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/15/初试Spring-Cloud-Gateway/" class="title">初试Spring-Cloud-Gateway</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-15T13:13:50.000Z" itemprop="datePublished">2019-02-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java虚拟机/">Java虚拟机</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/11/JVM内存结构/" class="title">JVM内存结构</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-11T12:30:33.000Z" itemprop="datePublished">2019-02-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spring核心框架/">Spring核心框架</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/10/Spring依赖注入-入门/" class="title">Spring依赖注入-入门</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-10T05:31:34.000Z" itemprop="datePublished">2019-02-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/设计模式/">设计模式</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/10/简单工厂设计模式/" class="title">简单工厂设计模式</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-10T03:34:26.000Z" itemprop="datePublished">2019-02-10</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IOC/">IOC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网关/">网关</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#虚拟安装配置"><span class="toc-number">1.</span> <span class="toc-text">虚拟安装配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装JDK"><span class="toc-number">2.</span> <span class="toc-text">安装JDK</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeeper安装"><span class="toc-number">3.</span> <span class="toc-text">zookeeper安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka安装"><span class="toc-number">4.</span> <span class="toc-text">kafka安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kafka功能测试"><span class="toc-number">5.</span> <span class="toc-text">kafka功能测试</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Kafka安装" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Kafka安装
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/02/27/Kafka安装/" class="article-date">
+	  <time datetime="2019-02-27T13:15:45.000Z" itemprop="datePublished">2019-02-27</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Kafka/">Kafka</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/02/27/Kafka安装/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.8k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 8(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="虚拟安装配置"><a href="#虚拟安装配置" class="headerlink" title="虚拟安装配置"></a>虚拟安装配置</h1><p>kafka一般安装到linux操作系统，当然windows下面也可以运行，作为程序员，还是在linux下面开发测试为主，因此我们首先安装3台linux虚拟机。</p>
+<ul>
+<li>虚拟机软件：vmware workstation 14 pro</li>
+<li>操作系统： CentOS-7-x86_64-DVD-1804</li>
+</ul>
+<p>我们首先使用虚拟机软件vmware workstation 14 pro安装CentOS系统，相关教程网上很多，在此不必演示，安装之后再克隆两台，之后进行相关配置。</p>
+<ol>
+<li><p>网络配置</p>
+<ul>
+<li><p>切换root用户</p>
+</li>
+<li><p><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code></p>
+<ul>
+<li>需要更改如下内容：</li>
+</ul>
+<p><code>BOOTPROTO=static</code></p>
+<p><code>ONBOOT=yes</code></p>
+<ul>
+<li>增加如下内容：（注意IPADDR对于其它两台服务器。为：192.168.40.102、192.168.40.103）</li>
+</ul>
+<blockquote>
+<p>IPADDR=192.168.40.101<br>NETMASK=255.255.255.0<br>GATEWAY=192.168.1.1</p>
+</blockquote>
+<p>特别注意:IPADDR必须和windows下面的VMnet8的IP: 192.168.40.1在同一个网段</p>
+<blockquote>
+<p>以太网适配器 VMware Network Adapter VMnet8:</p>
+<p>   连接特定的 DNS 后缀 . . . . . . . :<br>   本地链接 IPv6 地址. . . . . . . . : fe80::3d3c:50d2:c7d:e637%43<br>   IPv4 地址 . . . . . . . . . . . . : 192.168.40.1<br>   子网掩码  . . . . . . . . . . . . : 255.255.255.0<br>   默认网关. . . . . . . . . . . . . :</p>
+</blockquote>
+<ul>
+<li>完整配置如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens33</span><br><span class="line">UUID=04627314-e75a-4ee6-9c5a-26d7b68f0927</span><br><span class="line">DEVICE=ens33</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=192.168.40.101</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.1.1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启网络</p>
+<p><code>service network restart</code></p>
+</li>
+<li><p>测试：使用mobaxterm连接，该软件以后主要作为SSH连接工具。或：<code>telnet 192.168.40.101 22</code></p>
+</li>
+</ul>
+</li>
+<li><p>主机名配置</p>
+<ul>
+<li><p>编辑 <code>vim /etc/sysconfig/network</code> ，添加如下配置。包含了主机最基本的网络信息,用于系统启动。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=kafka-101</span><br></pre></td></tr></table></figure>
+<p>注意其它两台服务器名称。</p>
+</li>
+<li><p>完成主机名映射为IP地址的功能。<code>vim /etc/hosts</code> 增加如下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.101   kafka-101</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启服务器生效。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h1><ol>
+<li><p><strong>查看原有系统的jdk</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-101 ~]# java -version</span><br><span class="line">openjdk version "1.8.0_161"</span><br><span class="line">OpenJDK Runtime Environment (build 1.8.0_161-b14)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 25.161-b14, mixed mode)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>删除自带的openjdk（需切换至root用户)</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa| grep openjdk|xargs rpm -e --nodeps</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>新建jdk安装目录</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/local/java</span><br><span class="line">cd /usr/local/java</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>下载jdk并上传至服务器/usr/local/java目录，并解压</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf jdk-8u201-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>配置/etc/profile文件，添加如下内容</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_201</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使之生效</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>再次查看jdk，安装成功</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-101 java]# java -version</span><br><span class="line">java version &quot;1.8.0_201&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_201-b09)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>注意问题，如果切换到普通用户，查看JDK版本不能正常执行命令，则新打开一个连接或者重启服务器再查看即可 。</strong></p>
+</li>
+</ol>
+<h1 id="zookeeper安装"><a href="#zookeeper安装" class="headerlink" title="zookeeper安装"></a>zookeeper安装</h1><p>kafka依赖zookeeper管理元信息，因此再安装kafka之前必须安装zookeeper。</p>
+<blockquote>
+<p>Zookeeper集群中只要有过半的节点是正常的情况下，那么整个集群对外就是可用的。正是基于这个特性，要将ZK集群的节点数量要为奇数（2n+1：如3、5、7个节点）较为合适。</p>
+</blockquote>
+<ol>
+<li><p>服务器规划（三台服务器即就是上面创建配置的）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">服务器1：192.168.40.101 端口：2181、2881、3881</span><br><span class="line">服务器2：192.168.40.102 端口：2182、2882、3882</span><br><span class="line">服务器3：192.168.40.103 端口：2183、2883、3883</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改操作系统的hosts文件，添加与主机IP的映射，注意每个服务器都要添加下面的映射。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.40.101 kafka-101</span><br><span class="line">192.168.40.102 kafka-102</span><br><span class="line">192.168.40.103 kafka-103</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将zookeeper的压缩包上传至各个服务器(/home/yefengyu/)，解压各个服务器上的压缩包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf zookeeper-3.4.13.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入zookeeper目录，创建两个文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd zookeeper-3.4.13/</span><br><span class="line">mkdir data</span><br><span class="line">mkdir logs</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将conf下面的zoo_sample.cfg备份一份</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd conf</span><br><span class="line">cp zoo_sample.cfg zoo.cfg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改各个服务器上的zoo.cfg文件，内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">initLimit=10</span><br><span class="line">syncLimit=5</span><br><span class="line">dataDir=/home/yefengyu/zookeeper-3.4.13/data</span><br><span class="line">dataLogDir=/home/yefengyu/zookeeper-3.4.13/logs</span><br><span class="line">clientPort=2181</span><br><span class="line">server.1=kafka-101:2888:3888</span><br><span class="line">server.2=kafka-102:2888:3888</span><br><span class="line">server.3=kafka-103:2888:3888</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在每个服务器的/home/yefengyu/zookeeper-3.4.13/data目录下面创建myid文件，里面只需要添加服务器序号</p>
+<ul>
+<li>kafka-101 服务器中myid内容为：1</li>
+<li>kafka-102 服务器中myid内容为：2</li>
+<li>kafka-103 服务器中myid内容为：3</li>
+</ul>
+</li>
+<li><p>配置zookeeper的环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /home/yefengyu/.bash_profile</span><br><span class="line">增加如下信息：</span><br><span class="line"></span><br><span class="line">#zookeeper env</span><br><span class="line">export ZOOKEEPER_HOME=/home/yefengyu/zookeeper-3.4.13</span><br><span class="line">export PATH=$ZOOKEEPER_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">为了使得命令生效，需要执行：</span><br><span class="line">source /home/yefengyu/.bash_profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动zookeeper</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zkServer.sh start</span><br><span class="line">zkServer.sh restart 重启</span><br></pre></td></tr></table></figure>
+<p>因为已经配置环境变量，所以可以在任何目录下面启动zookeeper。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-103 data]# zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /home/yefengyu/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看zookeeper是否启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zkServer.sh status</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-103 data]# zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /home/yefengyu/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Error contacting service. It is probably not running.</span><br></pre></td></tr></table></figure>
+<p>说明防火墙有问题，我们可以关闭防火墙。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">判断防火墙开启：systemctl is-enabled firewalld</span><br><span class="line">查看防火墙状态：systemctl status firewalld</span><br><span class="line">临时关闭防火墙：systemctl stop firewalld</span><br><span class="line">永久关闭防火墙：systemctl disable firewalld</span><br><span class="line">打开防火墙：systemctl enable firewalld</span><br><span class="line">重启防火墙：systemctl restart firewalld</span><br></pre></td></tr></table></figure>
+<p>再次查看zk状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-101 data]# zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /home/yefengyu/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-102 data]# zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /home/yefengyu/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-103 data]# zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /home/yefengyu/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Mode: leader</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭zookeeper</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zkServer.sh stop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看日志</p>
+<blockquote>
+<p>当前终端处于哪个目录，执行完zkServer.sh start命令， zookeeper.out就会写在哪个目录，可以修改日志输出到固定目录，方便问题定位。</p>
+</blockquote>
+<p>修改  /home/yefengyu/zookeeper-3.4.13/bin/zkEnv.sh </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if [ &quot;x$&#123;ZOO_LOG_DIR&#125;&quot; = &quot;x&quot; ]</span><br><span class="line">then</span><br><span class="line">    ZOO_LOG_DIR=&quot;.&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if [ &quot;x$&#123;ZOO_LOG_DIR&#125;&quot; = &quot;x&quot; ]</span><br><span class="line">then</span><br><span class="line">    ZOO_LOG_DIR=&quot;/home/yefengyu/zklogs/&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="kafka安装"><a href="#kafka安装" class="headerlink" title="kafka安装"></a>kafka安装</h1><ol>
+<li><p>上传至服务器 /home/yefengyu 目录下面</p>
+</li>
+<li><p>解压<code>tar -zxvf kafka_2.12-2.1.1.tgz</code></p>
+</li>
+<li><p><strong>修改server.properties</strong></p>
+<ul>
+<li><p>kafka连接zookeeper的地址，每个kafka的server.properties里面的这个配置都要一样</p>
+<p><code>zookeeper.connect=192.168.40.101:2181,192.168.40.102:2181,192.168.40.103:2181</code></p>
+</li>
+<li><p>kafka存放日志的目录</p>
+<p><code>log.dirs=/home/yefengyu/kafka_2.12-2.1.1/kafka-logs</code></p>
+</li>
+<li><p>kafka当前集群的唯一标识，每个机器的kafka服务都不一样</p>
+<p><code>broker.id=1</code></p>
+</li>
+<li><p>修改advertised.listeners，每个服务器上面的都不一样</p>
+<p><code>advertised.listeners=PLAINTEXT://192.168.40.101:9092</code></p>
+</li>
+</ul>
+</li>
+<li><p>启动kafka </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/yefengyu/kafka_2.12-2.1.1/</span><br><span class="line">./bin/kafka-server-start.sh config/server.properties &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看是否启动成功 <code>jps</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-103 kafka_2.12-2.1.1]# jps</span><br><span class="line">4567 Kafka</span><br><span class="line">74476 QuorumPeerMain</span><br><span class="line">9677 Jps</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="kafka功能测试"><a href="#kafka功能测试" class="headerlink" title="kafka功能测试"></a>kafka功能测试</h1><ol>
+<li><p>创建主题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --create --zookeeper=192.168.40.101:2181,192.168.40.102:2181,192.168.40.103:2181 --replication-factor 3 --partitions 3 --topic ALARM</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看主题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --list  --zookeeper=192.168.40.101:2181,192.168.40.102:2181,192.168.40.103:2181</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发生消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-producer.sh --broker-list 192.168.40.101:9092,192.168.40.102:9092,192.168.40.103:9092 --topic ALARM</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server 192.168.40.101:9092,192.168.40.102:9092,192.168.40.103:9092 --topic ALARM</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://yefengyu.github.io/2019/02/27/Kafka安装/" title="Kafka安装" target="_blank" rel="external">http://yefengyu.github.io/2019/02/27/Kafka安装/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/yefengyu" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/yefengyu.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/yefengyu" target="_blank"><span class="text-dark">叶锋玉</span><small class="ml-1x"></small></a></h3>
+        <div>java工程师</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom="">
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/02/15/初试Spring-Cloud-Gateway/" title="初试Spring-Cloud-Gateway"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
